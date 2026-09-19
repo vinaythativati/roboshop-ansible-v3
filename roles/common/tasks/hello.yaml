@@ -1,0 +1,3 @@
+- name : this is hello file
+  debug :
+    msg : " hai this is hello file from common tasks"

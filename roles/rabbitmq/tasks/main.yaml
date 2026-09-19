@@ -1,0 +1,23 @@
+  - name : copy module
+    copy :
+      src : rabbitmq.repo
+      dest : /etc/yum.repos.d/rabbitmq.repo
+  - name : installing rabbit-mq
+    package :
+      name : rabbitmq-server
+      state : present
+  - name : starting rabbitmq
+    service : 
+      name : rabbitmq-server
+      state : started
+      enabled : yes
+  - name: create roboshop
+    community.rabbitmq.rabbitmq_user:
+      user: "{{ MQ_USER }}"
+      password: "{{ MQ_PASSWORD }}"
+      permissions:
+        - vhost: /
+          configure_priv: .*
+          read_priv: .*
+          write_priv: .*
+      state: present

@@ -1,0 +1,19 @@
+- name : mysql pasword
+  debug : 
+    msg : "{{ lookup('amazon.aws.aws_secret', 'roboshop/mysql_password', region='us-east-1') | from_json }}"
+
+- name : printing password
+  debug :
+    msg : "{{password.mysql_password}}"
+
+- name : installing mysql-server
+  package :
+    name : mysql-server 
+    state : present
+- name : enable and running
+  service :
+    name : mysqld
+    state : started
+    enabled : yes
+- name : seting the root password
+  command : mysql_secure_installation --set-root-pass "{{password.mysql_password}}"

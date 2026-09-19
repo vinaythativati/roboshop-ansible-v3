@@ -1,0 +1,4 @@
+- name : main file
+  hosts : cataloague
+  roles :
+  - demo

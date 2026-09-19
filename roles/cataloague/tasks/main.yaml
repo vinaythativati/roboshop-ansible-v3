@@ -1,0 +1,44 @@
+  - name : set-app
+    import_role :
+      name : common
+      tasks_from : app-setup.yaml
+
+  - name : calling nodejs yaml
+    import_role :
+      name : common
+      tasks_from : nodejs.yaml
+
+  - name : calling systemd-setup yaml
+    import_role :
+      name : common
+      tasks_from : systemd-setup.yaml
+
+  - name : copy the mongodb repo
+    copy :
+      src : mongo.repo
+      dest : /etc/yum.repos.d/mongo.repo
+  - name : install mongodb
+    package :
+      name : mongodb-mongosh 
+      state : present
+  - name : cataloague schema exist are not
+    shell: mongosh --host "{{ MONGODB_HOST }}" --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
+    register : cataloague_output
+    tags :
+    - mongodb
+  - name : printing the data
+    debug :
+      msg : "{{cataloague_output}}"
+    tags :
+    - mongodb
+  - name : load the products
+    shell : mongosh --host "{{ MONGODB_HOST }}" </app/db/master-data.js
+    when  : cataloague_output.stdout | int < 0 
+    tags :
+    - mongodb
+
+  - name : enable and start cataloague
+    service :
+      name : cataloague
+      state : started
+      enabled : yes

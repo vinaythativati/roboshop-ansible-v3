@@ -1,0 +1,23 @@
+
+
+- name : loading app-setup
+  import_role :
+    name : common
+    tasks_from : app-setup.yaml
+
+- name : loading nodejs
+  import_role :
+    name : common
+    tasks_from : nodejs.yaml    
+
+- name : loading systemd-setup
+  import_role :
+    name : common
+    tasks_from : systemd-setup.yaml
+
+- name : start user service
+  service :
+    state : started
+    name : user
+    enabled : yes
+  

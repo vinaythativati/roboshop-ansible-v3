@@ -1,0 +1,22 @@
+  - name : installing the maven and sql
+    package :
+      name : "{{ item }}"
+      state : present
+    loop :
+    - maven
+    - mysql
+  
+  - name: install python dependencies
+    pip:
+      name: PyMySQL
+      executable: pip3.9
+
+  - name : mvn clean
+    command : mvn clean package
+    args : 
+      chdir : /app
+
+  - name : rename file
+    command: mv target/shipping-1.0.jar shipping.jar 
+    args : 
+      chdir : /app

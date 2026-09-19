@@ -1,0 +1,9 @@
+  - name : enable the nodejs 20
+    command : dnf module disable nodejs -y
+  - name : installing node js 
+    package :
+      name : nodejs 
+      state : present
+  - name : installing dependence
+    community.general.npm:
+      path : /app

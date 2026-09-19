@@ -1,0 +1,26 @@
+
+
+  - name : loading apps-setup
+    import_role :
+      name : common
+      tasks_from : app-setup
+
+  - name : loading python
+    import_role :
+      name : common
+      tasks_from : python.yaml
+
+  - name : loading systemd-setup
+    import_role :
+      name : common
+      tasks_from : systemd-setup
+
+  - name : starting
+    service :
+      name : payment
+      state : started
+      enabled : yes
+
+
+
+

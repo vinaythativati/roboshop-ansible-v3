@@ -1,0 +1,25 @@
+- name :  disable redis 7
+  command : dnf module enable redis:7 -y
+
+- name : installing redis
+  package :
+    name : redis
+    state : present
+
+- name : replacing the content
+  replace : 
+    path : /etc/redis/redis.conf
+    regexp : 127.0.0.1
+    replace : 0.0.0.0
+
+- name : protected mode
+  lineinfile :
+    path : /etc/redis/redis.conf
+    regexp : 'protected-mode'
+    line : 'protected-mode no'
+  
+- name : enable and run
+  service :
+    name : redis
+    state : started
+    enabled : yes

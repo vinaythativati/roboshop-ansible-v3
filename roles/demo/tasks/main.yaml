@@ -1,0 +1,8 @@
+- name : this is a demo file
+  debug : 
+    msg: "executing demo file"
+
+- name : loading the common role here
+  import_role :
+    name : common
+    tasks_from : hello.yaml
