@@ -1,7 +1,7 @@
 - name : mysql pasword
   debug : 
-    msg : "{{ lookup('amazon.aws.aws_secret', 'password.roboshop-dev-mysql_root_password', region='us-east-1') | from_json }}"
-
+    msg : "{{ lookup('amazon.aws.aws_ssm', 'roboshop-dev-mysql_root_password', decrypt=False , region='us-east-1' ) }}"
+    
 - name : printing password
   debug :
     msg : "{{password.roboshop-dev-mysql_root_password}}"
