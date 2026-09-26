@@ -10,6 +10,14 @@
   package :
     name : mysql-server 
     state : present
+
+- name : install boto3 and  botocore
+  pip :
+    name : 
+    - boto3
+    - botocore
+    executable : pip3.9
+
 - name : enable and running
   service :
     name : mysqld
