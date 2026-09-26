@@ -1,3 +1,10 @@
+- name : install boto3 and  botocore
+  pip :
+    name : 
+    - boto3
+    - botocore
+    executable : pip3.9
+
 - name : mysql pasword
   debug : 
     msg : "{{ lookup('amazon.aws.aws_ssm', 'roboshop-dev-mysql_root_password', decrypt=False , region='us-east-1' ) }}"
@@ -10,13 +17,6 @@
   package :
     name : mysql-server 
     state : present
-
-- name : install boto3 and  botocore
-  pip :
-    name : 
-    - boto3
-    - botocore
-    executable : pip3.9
 
 - name : enable and running
   service :
